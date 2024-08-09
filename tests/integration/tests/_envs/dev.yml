@@ -1,0 +1,3 @@
+
+# dev env is the default. Please do not add config here
+# this file only purposes is for Codeception to run tests with parameter --env dev/qa

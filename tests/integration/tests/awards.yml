@@ -1,0 +1,32 @@
+\go1\integrationTest\Model\Award:
+  award (template):
+    title: <rtrim(<sentence()>, '.')>
+    description: <paragraphs(3, true)>
+    portal: "@portal_1"
+  award_{1..5} (extends award):
+  unpublished_award_1 (extends award):
+    published: false
+  award_for_group (extends award):
+
+\go1\integrationTest\Model\AwardEnrolment:
+  award_enrolment (template):
+    award: "@award_1"
+    user: "@user_1"
+    portal: "@portal_1"
+  award_enrolment_2 (extends award_enrolment):
+    award: "@award_2"
+    user: "@learner_2"
+    portal: "@portal_1"
+
+\go1\integrationTest\Model\User:
+  manager_for_award_{1..2} (extends user):
+    roles: [manager]
+  learner_for_award_{1..2} (extends user):
+    roles: [Student]
+    manager: '@manager_for_award_1'
+  learner_to_block_1 (extends user):
+    roles: [Student]
+    status: false
+  learner_for_award_enrolment_{1..2} (extends user):
+    roles: [Student]
+    manager: '@manager_for_award_1'

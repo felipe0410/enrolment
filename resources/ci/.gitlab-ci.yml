@@ -1,0 +1,67 @@
+include:
+  - project: 'domain-external-api/apim'
+    file: '/includes/apim_validate.yml'
+  - project: 'server/ci-template'
+    file:
+      - '/.gitlab-ci-php8.yml'
+      - '/includes/codeception-integration-test.yml'
+
+image: registry.code.go1.com.au/domain-infrastructure/docker-images/ci-php:php8.2
+
+# Predefined scopes
+.autoscale-runner: &autoscale-runner
+  retry: 1
+  tags: ["autoscale"]
+
+build:composer:
+  cache:
+    key:
+      files:
+        - composer.lock
+    paths:
+      - vendor/
+  script: 
+    - composer config gitlab-token.code.go1.com.au $UTIL_GITLAB_TOKEN
+    - composer install
+
+package:docker:
+  before_script:
+    - cp ./resources/ci/Dockerfile ./Dockerfile
+
+test:phpunit:
+  script:
+    - composer install
+    - vendor/bin/phpunit -c ./resources/ci/phpunit.xml --colors=never --log-junit report.xml --coverage-text --coverage-cobertura=cobertura.xml
+  artifacts:
+    reports:
+      junit: report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura.xml
+
+deploy:qa:k8s:
+  before_script:
+    - cd resources/ci
+  variables:
+    SCALE_MIN: "3"
+    SCALE_MAX: "5"
+    MEM_MIN: 512Mi
+    CPU_MIN: 100m
+    PAYMENT_API_KEY:               $_PAYMENT_API_KEY
+    PAYMENT_SECRET_KEY:            $_PAYMENT_SECRET_KEY
+    LEGACY:                        $LEGACY
+    CONTENT_LEARNING_USER_MIGRATION: $CONTENT_LEARNING_USER_MIGRATION
+  when: on_success
+
+deploy:production:k8s:
+  before_script:
+    - cd resources/ci
+  variables:
+    SCALE_MIN: "7"
+    SCALE_MAX: "20"
+    MEM_MIN: 512Mi
+    CPU_MIN: 100m
+    PAYMENT_API_KEY:               $_PAYMENT_API_KEY
+    PAYMENT_SECRET_KEY:            $_PAYMENT_SECRET_KEY
+    LEGACY:                        $LEGACY
+    CONTENT_LEARNING_USER_MIGRATION: $CONTENT_LEARNING_USER_MIGRATION

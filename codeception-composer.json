@@ -1,0 +1,21 @@
+{
+    "require-dev": {
+        "codeception/codeception": "^4.2",
+        "codeception/module-asserts": "^2.0",
+        "codeception/module-rest": "^2.0",
+        "nelmio/alice": "^3.9",
+        "codeception/module-phpbrowser": "^2.0",
+        "go1/integration-test": "dev-master"
+    },
+    "repositories": {
+        "code.go1.com.au/2888": {
+            "type": "composer",
+            "url": "https://code.go1.com.au/api/v4/group/2888/-/packages/composer/packages.json"
+        }
+    },
+    "config": {
+        "gitlab-domains": [
+            "code.go1.com.au"
+        ]
+    }
+}

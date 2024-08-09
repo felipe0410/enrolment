@@ -1,0 +1,58 @@
+{
+    "name":              "go1/enrolment",
+    "prefer-stable":     true,
+    "minimum-stability": "dev",
+    "autoload":          {
+        "psr-4": {
+            "go1\\enrolment\\":                            "./",
+            "go1\\core\\learning_record\\attribute\\":     "./services/attribute",
+            "go1\\core\\learning_record\\enquiry\\":       "./services/enquiry",
+            "go1\\core\\learning_record\\gradebook\\":     "./services/gradebook",
+            "go1\\core\\learning_record\\manual_record\\": "./services/manual-record",
+            "go1\\core\\learning_record\\plan\\":          "./services/plan",
+            "go1\\core\\learning_record\\revision\\":      "./services/revision"
+        }
+    },
+    "require":           {
+        "beberlei/assert":         "^3.2.0",
+        "ezyang/htmlpurifier":     "^v4.12.0",
+        "go1/app":                 "dev-master",
+        "go1/util":                "dev-master",
+        "go1/util_core":           "dev-master",
+        "go1/util_core_clients":   "dev-master",
+        "go1/util_dataset":        "dev-master",
+        "go1/util_db":             "dev-master",
+        "guzzlehttp/guzzle":       "^7.0.1",
+        "monolog/monolog":         "^1.19.0",
+        "php-amqplib/php-amqplib": "^3.0",
+        "go1/payment_request":     "dev-master",
+        "go1.core/group.schema":   "dev-master",
+        "swaggest/json-diff":      "^3.5",
+        "go1.core/util":           "dev-master",
+        "symfony/http-client":     ">=v4.3.5",
+        "nyholm/psr7":             "^1.2",
+        "ext-json":                "*",
+        "ext-pdo":                 "*",
+        "doctrine/migrations":     "^2.3",
+        "domain-users/domain-user-php-sdk": "dev-master",
+        "go1/beamphp": "dev-master"
+    },
+    "require-dev":       {
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit":          "^9.5"
+    },
+    "repositories":      [
+        {"type": "composer", "url": "https://code.go1.com.au/api/v4/group/261/-/packages/composer/"},
+        {"type": "vcs", "url":  "git@code.go1.com.au:go1-core/group/group-schema.git"},
+        {"type": "vcs", "url": "git@code.go1.com.au:mirror/go1-core/util.git" },
+        {"type": "vcs", "url": "git@code.go1.com.au:util/app.git" },
+        {"type": "vcs", "url": "git@code.go1.com.au:domain-users/domain-user-php-sdk.git"},
+        {"type": "vcs", "url": "git@code.go1.com.au:domain-insights/beam-php.git"}
+    ],
+    "config": {
+        "gitlab-domains": ["code.go1.com.au"]
+    },
+    "scripts":           {
+        "lint": "php-cs-fixer fix --using-cache=no --rules='{\"braces\": {\"allow_single_line_closure\": true}}' ."
+    }
+}

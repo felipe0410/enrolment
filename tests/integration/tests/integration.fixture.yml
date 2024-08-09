@@ -1,0 +1,302 @@
+include:
+- base.yml
+- courses.yml
+- awards.yml
+
+
+\go1\integrationTest\Model\Enrolment:
+  enrolment_due_1:
+    lo: "@course_1"
+    user: "@learner_1"
+    dueDate: '<dateTimeBetween("-90 days", "-1 day")>'
+  enrolment_not_started_1:
+    lo: "@course_1"
+    user: "@learner_2"
+    status: not-started
+  enrolment_completed:
+    lo: "@course_internal_1"
+    user: "@learner_1"
+    status: completed
+  enrolment_completed_3:
+    lo: "@course_internal_1"
+    user: "@learner_with_manager"
+    status: completed
+  enrolment_in_progress_1:
+    lo: "@course_2"
+    user: "@learner_1"
+    status: in-progress
+  enrolment_completed_1:
+    lo: "@course_2"
+    user: "@learner_2"
+    status: completed
+  enrolment_pending_1:
+    lo: "@course_with_duration"
+    user: "@learner_1"
+    status: pending
+  enrolment_inprogress_course_event_for_attend:
+    lo: "@course_event_for_attend"
+    user: "@learner_1"
+    status: in-progress
+  enrolment_inprogress_course_event_for_attend_1:
+    lo: "@course_event_for_attend"
+    user: "@learner_2"
+    status: in-progress
+  enrolment_in_progress_1_admin:
+    lo: "@course_2"
+    user: "@admin"
+    status: in-progress
+  enrolment_for_update_{1..8}:
+    lo: "@course_internal_for_update_<current()>"
+    user: "@learner_2"
+  enrolment_for_update_9:
+    lo: "@course_internal_for_update_9"
+    user: "@learner_2"
+    status: completed
+  enrolment_for_deletion_{1..4}:
+    lo: "@course_internal_<current()>"
+    user: "@learner_2"
+  enrolment_for_manager_self_view_edit_delete_assignment:
+    lo: "@course_for_manager_self_view_edit_delete_assignment"
+    user: "@learner_for_inactive_user_2"
+    status: in-progress
+  enrolment_for_manualrecord:
+      lo: "@marketplace_course_1"
+      user: "@learner_1"
+      status: in-progress
+
+  enrolment_module:
+    parent: "@enrolment_for_deletion_1"
+    lo: "@module_internal_1"
+    user: "@enrolment_for_deletion_1->user"
+  #Consumed
+  enrolment_module_2:
+    parent: "@enrolment_for_deletion_2"
+    lo: "@module_internal_2"
+    user: "@enrolment_for_deletion_2->user"
+  #Consumed
+  enrolment_module_3:
+    parent: "@enrolment_for_deletion_3"
+    lo: "@module_internal_3"
+    user: "@enrolment_for_deletion_3->user"
+  #Consumed
+  enrolment_module_4:
+    parent: "@enrolment_for_deletion_4"
+    lo: "@module_internal_4"
+    user: "@enrolment_for_deletion_4->user"
+  #Consumed
+  enrolment_module_5:
+    parent: "@enrolment_for_update_1"
+    lo: "@module_internal_5"
+    user: "@enrolment_for_update_1->user"
+  #Consumed
+  enrolment_module_6:
+    parent: "@enrolment_for_update_2"
+    lo: "@module_internal_6"
+    user: "@enrolment_for_update_2->user"
+
+  enrolment_report_v2:
+    lo: "@course_1"
+    user: "@learner_2"
+    dueDate: '<dateTimeBetween("-90 days", "-1 day")>'
+  enrolment_report_v2_1:
+    lo: "@course_1"
+    user: "@learner_3"
+  enrolment_report_v2_2:
+    lo: "@course_1"
+    user: "@learner_with_manager"
+  enrolment_report_v2_3:
+    lo: "@course_1"
+    user: "@learner_11"
+  enrolment_completed_filter_3:
+    lo: "@course_for_assignment_filter_3"
+    user: "@learner_assigned_filter_1"
+    status: completed
+  enrolment_completed_filter_4:
+    lo: "@course_for_assignment_filter_3"
+    user: "@learner_assigned_filter_2"
+    status: not-started
+  enrolment_completed_filter_5:
+    lo: "@course_for_assignment_filter_3"
+    user: "@learner_assigned_filter_3"
+    status: in-progress
+  enrolment_completed_filter_6:
+    lo: "@course_for_assignment_filter_4"
+    user: "@learner_assigned_filter_1"
+    status: not-started
+  enrolment_completed_filter_7:
+    lo: "@course_for_assignment_filter_4"
+    user: "@learner_assigned_filter_2"
+    status: in-progress
+  enrolment_completed_filter_8:
+    lo: "@course_for_assignment_filter_4"
+    user: "@learner_assigned_filter_3"
+    status: completed
+
+
+\go1\integrationTest\Model\Portal:
+  portal_alt (extends portal):
+    admin: '@admin_alt'
+
+\go1\integrationTest\Model\User:
+  admin_alt (extends user):
+    portal: '@portal_alt'
+  manager_1 (extends user):
+    roles: [manager]
+  learner_with_manager (extends user):
+    manager: '@manager_1'
+  learner_with_manager_2 (extends user):
+    manager: '@manager_1'
+  learner_without_enrolments (extends user):
+  admin_2 (extends user):
+    roles: [administrator]
+  content_admin_1 (extends user):
+    roles: [administrator,content administrator]
+  learner_11 (extends user):
+    manager: '@manager_1'
+  learner_12 (extends user):
+    manager: '@manager_1'
+  learner_for_assigned_1 (extends user):
+  learner_for_assigned_2 (extends user):
+    manager: '@manager_1'
+  learner_self-directed (extends user):
+    manager: '@manager_1'
+  learner_assigned_filter_{1..3} (extends user):
+    manager: '@manager_2'
+  learner_1 (extends user):
+    manager: '@manager_1'
+  learner_reassign_{1..3} (extends user):
+    manager: '@manager_1'
+  learner_for_assigned_v2_{1..4} (extends user):
+    manager: '@manager_1'
+  learner_in_group_{1..2} (extends user):
+  inactive_user (extends user):
+  manager_level_1 (extends user):
+    roles: [manager]
+  manager_level_2 (extends user):
+    roles: [manager]
+    manager: '@manager_level_1'
+  manager_level_3 (extends user):
+    roles: [manager]
+    manager: '@manager_level_2'
+  manager_level_4 (extends user):
+    roles: [manager]
+    manager: '@manager_level_3'
+  manager_level_5 (extends user):
+    roles: [manager]
+    manager: '@manager_level_4'
+  manager_level_6 (extends user):
+    roles: [manager]
+    manager: '@manager_level_5'
+  learner_for_inactive_user_{1..2} (extends user):
+    roles: [Student]
+  learner_for_deleted_user (extends user):
+    roles: [Student]
+  student_1 (extends user):
+    roles: [ Student ]
+
+\go1\integrationTest\Model\Policy:
+  policy (template):
+    portal: "@portal_alt"
+    hostEntityType: 'lo'
+    hostEntity: "@course_internal_1"
+    type: 1
+  policy_portal (extends policy):
+    entityType: 'portal'
+    entityPortals: ["@portal_alt"]
+
+\go1\integrationTest\Model\LearningObject:
+  course (template):
+    title: <rtrim(<sentence()>, '.')>
+    description: <paragraphs(3, true)>
+    portal: "@portal_1"
+    author: "@admin"
+  course_internal_{1..8} (extends course):
+  course_internal_for_update_{1..9} (extends course):
+  module_internal_{1..8} (extends course):
+    type: module
+    parent: '@course_internal_1'
+  course_enquiry (extends course):
+    allowEnrolment: enquiry
+  module_enrol_1 (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_1"
+  module_allow_reuse_enrolment (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_allow_reuse_enrolment"
+  course_for_assign_plan (extends course):
+  course_for_assigned_enrollment_1 (extends course):
+  course_for_assigned_enrollment_2 (extends course):
+  course_for_enrollment_self-directed (extends course):
+  course_for_assignment_filter_{1..4} (extends course):
+  course_for_reassign_not_started (extends course):
+  course_for_reassign_in_progress (extends course):
+  module_for_course_for_reassign_in_progress (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_for_reassign_in_progress"
+  course_for_reassign_completed (extends course):
+  module_for_course_for_reassign_completed (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_for_reassign_in_progress"
+  course_for_assign_v2 (extends course):
+  course_for_assign_v2_not_started (extends course):
+  course_for_assign_v2_in_progress (extends course):
+  module_for_course_for_assign_v2_in_progress (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_for_assign_v2_in_progress"
+  course_for_assign_v2_self_directed (extends course):
+  module_for_course_for_assign_v2_self_directed (extends course):
+    portal: "@portal_1"
+    author: "@admin"
+    type:   module
+    parent: "@course_for_assign_v2_self_directed"
+  course_for_manager_self_view_edit_delete_assignment (extends course):
+  course_for_assign_via_group (extends course):
+
+\go1\integrationTest\Model\LearningItem:
+  li (template):
+    title: <rtrim(<sentence()>, '.')>
+    description: <paragraphs(3, true)>
+    portal: "@portal_1"
+  li_standalone_link (extends li):
+    single: true
+    type: link
+    portal: '@portal_alt'
+  li_standalone_link_{2..3} (extends li):
+    single: true
+    type: link
+    data:
+      single_li: true
+  # audio
+  audio (template, extends li):
+    type: "audio"
+  li_standalone_audio (extends audio):
+    single: true
+    data:
+      singleLi: true
+
+\go1\integrationTest\Model\Group:
+  group (template):
+    title: <rtrim(<sentence()>, '.')>
+    description: <sentence()>
+    visibility: <numberBetween(0,2)>
+    status: <numberBetween(0,1)>
+  group_public_for_membership_{1..2} (extends group):
+    visibility: 1
+    portal: '@portal_1'
+\go1\integrationTest\Model\GroupMembership:
+  group_membership_1:
+    group: '@group_public_for_membership_1'
+    user: '@learner_in_group_1'
+    status: 1
+    mode: 1
+    portal: '@portal_1'

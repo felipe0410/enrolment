@@ -1,0 +1,8 @@
+modules:
+  config:
+    \go1\integrationTest\Fixtures\FixturesModule:
+      api_url: https://api.qa.go1.cloud
+      instance: "accounts.gocatalyze.com"
+      root_domain: qa.go1.cloud
+      accounts_admin_email: staff@go1.co
+      accounts_admin_password: "%INTEGRATION_STAFF_PASSWORD%"

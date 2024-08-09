@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         colors="true"
+         bootstrap="../../vendor/autoload.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory>../../</directory>
+        </include>
+        <exclude>
+            <directory>../../tests</directory>
+            <directory>../../services/</directory>
+            <directory>../../vendor</directory>
+        </exclude>
+    </coverage>
+    <testsuites>
+        <testsuite name="go1">
+            <directory>../../tests</directory>
+            <directory>../../services/attribute/tests</directory>
+            <directory>../../services/enquiry/tests</directory>
+            <directory>../../services/manual-record/tests</directory>
+            <directory>../../services/plan/tests</directory>
+            <directory>../../services/revision/tests</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <ini name="memory_limit" value="1024M"/>
+        <ini name="date.timezone" value="UTC"/>
+    </php>
+</phpunit>

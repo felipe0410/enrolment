@@ -1,0 +1,26 @@
+\go1\integrationTest\Model\Portal:
+  portal (template):
+    domain: 'qa-<(bin2hex(random_bytes(64 / 8)))>'
+    name: <company()>
+    industry: <industry()>
+    countryCode: <countryCode()>
+    seats: '<numberBetween(1,100)>'
+  portal_1 (extends portal):
+    admin: '@admin'
+    industry: 'Education and Training'
+    countryCode: 'AU'
+
+\go1\integrationTest\Model\User:
+  user (template):
+    email (unique): "@portal_1->domain<email()>"
+    firstName: <firstName()>
+    lastName: <lastName()>
+    password: <password(8,20)>
+    portal: '@portal_1'
+  admin (extends user):
+    roles: [administrator]
+  manager_{1..2} (extends user):
+    roles: [manager]
+  author (extends user):
+    roles: [tutor]
+  learner_{1..10} (extends user):

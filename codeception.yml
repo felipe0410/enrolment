@@ -1,0 +1,43 @@
+paths:
+  tests: tests/integration/tests
+  output: tests/integration/tests/_output
+  data: tests/integration/tests/_data
+  support: tests/integration/tests/_support
+  envs: tests/integration/tests/_envs
+actor_suffix: Tester
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
+    - \go1\integrationTest\Extension\APIExpensive
+    - \go1\integrationTest\Extension\SSLFixer
+    - \go1\integrationTest\Extension\TestRetrier
+modules:
+  config:
+    REST:
+      depends: PhpBrowser
+      part: json
+      url: https://api.dev.go1.cloud
+    \go1\integrationTest\Fixtures\FixturesModule:
+      api_url: https://api.dev.go1.cloud
+      instance: accounts-dev.gocatalyze.com
+      accounts_admin_email: staff@go1.co
+      accounts_admin_password: "%INTEGRATION_STAFF_PASSWORD%"
+      root_domain: dev.go1.cloud
+  enabled:
+    - \go1\integrationTest\Support\InternalApiTrait\Latency:
+        api_high_latency: 15
+        api_normal_latency: 10
+        external_api_latency: 60
+env:
+  qa:
+    modules:
+      config:
+        REST:
+          depends: PhpBrowser
+          part: json
+          url: https://api.qa.go1.cloud
+      enabled:
+        - \go1\integrationTest\Support\InternalApiTrait\Latency:
+            api_high_latency: 5
+            api_normal_latency: 3
+            external_api_latency: 50

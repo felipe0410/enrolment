@@ -1,0 +1,75 @@
+\go1\integrationTest\Model\LearningObject:
+  course (template):
+    title: <rtrim(<sentence()>, '.')>
+    description: <paragraphs(3, true)>
+    portal: "@portal_1"
+    author: "@admin"
+  course_{1..3} (extends course):
+    author: "@admin"
+    attributes:
+      entry_level: {key: "488"}
+  course_allow_reuse_enrolment (extends course):
+    author: "@admin"
+    allowReuseEnrolment: true
+  course_without_image (extends course):
+    author: "@admin"
+  course_without_enrolment (extends course):
+    author: "@admin"
+  course_with_price (extends course):
+    pricing:
+      price: 1.23
+      currency: AUD
+      tax: 10
+      tax_included: true
+      tax_display: true
+  course_with_duration (extends course):
+    data:
+      duration: 60
+  marketplace_course_{1..2} (extends course):
+    marketplace: true
+    attributes:
+      topics:
+      - "65"
+      - "25"
+  marketplace_course_unpublished (extends course):
+    marketplace: true
+    attributes:
+      topics:
+      - "65"
+      - "25"
+    published: false
+  private_course (extends course):
+    private: true
+  course_event (template, extends course):
+    event:
+      start: '<dateTimeBetween("+5 days", "+10 days")>'
+      end: '<dateTimeBetween("+11 days", "+90 days")>'
+      location:
+        country: AU
+        administrative_area: QLD
+        locality: Brisbane
+        thoroughfare: Bentleys Office
+        postal_code: 4000
+  course_event_new (extends course):
+    author: "@admin"
+  course_event_for_attend (extends course):
+    author: "@admin"
+  course_event_for_manage_attendee (extends course):
+    author: "@admin"
+  course_for_assignment (extends course):
+    author: "@admin"
+  course_for_group_{1..3} (extends course):
+    author: "@admin"
+  course_with_attributes_and_summary (extends course):
+    author: "@admin"
+    summary: "This is a course summary"
+    attributes:
+      learning_outcomes: ["Outcome 1", "Outcome 2", "Outcome 3"]
+      region_restrictions: [166]
+      topics:
+        - "65"
+        - "25"
+  course_with_attributes_1 (extends course):
+    private: false
+    attributes:
+      region_restrictions: [165]

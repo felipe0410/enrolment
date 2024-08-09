@@ -1,0 +1,8 @@
+actor: IntegrationTester
+modules:
+  enabled:
+    - \Helper\Integration
+    - REST
+    - Asserts
+    - \go1\integrationTest\Fixtures\FixturesModule:
+        fixtures_file: tests/integration/tests/integration.fixture.yml
